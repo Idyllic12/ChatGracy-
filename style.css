@@ -1,0 +1,126 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e5ddd5; /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#chat-container {
+    width: 90%; /* Use 90% of the viewport width */
+    max-width: 400px; /* Maximum width */
+    height: 95vh; /* Increased height to 95% of viewport height */
+    border-radius: 20px; /* Rounded edges */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#chat-header {
+    display: flex;
+    justify-content: space-between; /* Space between title and button */
+    align-items: center; /* Center the items vertically */
+    padding: 10px; /* Padding around the header */
+    background-color: #25D366; /* Header color */
+    color: white; /* White text */
+}
+
+#chat-header h2 {
+    margin: 0; /* Remove default margin */
+    font-size: 20px; /* Header font size */
+}
+
+#close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer; /* Pointer cursor for button */
+}
+
+#chatbox {
+    flex-grow: 1; /* Allow chatbox to grow */
+    overflow-y: auto; /* Enable scrolling for overflow */
+    padding: 10px;
+    background-color: #ffffff; /* White chat area */
+    display: flex; /* Make chatbox a flex container */
+    flex-direction: column; /* Arrange messages in a column */
+}
+
+.user-msg, .bot-msg {
+    padding: 10px 15px;
+    border-radius: 20px; /* Rounded message bubbles */
+    margin: 5px 0;
+    max-width: 75%;
+    display: inline-block;
+    word-wrap: break-word;
+}
+
+.user-msg {
+    background-color: #dcf8c6; /* Light green for user messages */
+    color: black; /* Black text for readability */
+    align-self: flex-end; /* Align user messages to the right */
+}
+
+.bot-msg {
+    background-color: #f1f1f1; /* Light gray for bot messages */
+    color: black; /* Black text for readability */
+    align-self: flex-start; /* Align bot messages to the left */
+}
+
+#input-container {
+    display: flex; /* Use flexbox to align input and button */
+    padding: 10px; /* Add some padding around the input area */
+    background-color: #f9f9f9; /* Light background for the input area */
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Rounded input box */
+    padding: 10px;
+    width: calc(100% - 80px); /* Adjust width to accommodate button */
+    font-size: 16px;
+}
+
+#send-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* Rounded button */
+    background-color: #25D366; /* WhatsApp green */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px; /* Space between button and input */
+}
+
+#send-btn:hover {
+    background-color: #128C7E; /* Darker green on hover */
+}
+
+#send-btn:active {
+    background-color: #1EBEA5; /* Slightly darker green when pressed */
+}
+
+/* Media queries for better responsiveness on smaller screens */
+@media (max-width: 600px) {
+    #chat-header h2 {
+        font-size: 18px; /* Smaller header font on mobile */
+    }
+
+    #close-btn {
+        font-size: 20px; /* Smaller close button font */
+    }
+
+    input[type="text"] {
+        font-size: 14px; /* Smaller input font */
+    }
+
+    #send-btn {
+        font-size: 14px; /* Smaller button font */
+    }
+}

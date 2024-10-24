@@ -3,21 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatGracy</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        #chatbox {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 80vh;
+            background-color: white;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+        .user-msg {
+            background-color: #d1e7dd;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: right;
+            margin: 5px 0;
+        }
+        .bot-msg {
+            background-color: #f8d7da;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: left;
+            margin: 5px 0;
+        }
+        #user-input {
+            width: 85%;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #send-btn {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div id="chat-container">
-        <div id="chat-header">
-            <h2>ChatGracy</h2>
-            <button id="close-btn">&times;</button>
-        </div>
-        <div id="chatbox"></div>
-        <div id="input-container">
-            <input type="text" id="user-input" placeholder="Type a message...">
-            <button id="send-btn">Send</button>
-        </div>
-    </div>
-    <script src="server.js"></script>
+
+<div id="chatbox"></div>
+
+<input type="text" id="user-input" placeholder="Type a message...">
+<button id="send-btn">Send</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatbox = document.getElementById('chatbox');
+        const input = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-btn');
+
+        // Function to send user message
+        async function sendMessage() {
+            const userMessage = input.value.trim();
+            if (userMessage) {
+                // Display user message
+                displayMessage(userMessage, 'user-msg');
+
+                // Clear input field
+                input.value = '';
+
+                // Generate bot response
+                await generateResponse(userMessage);
+            }
+        }
+
+        // Function to display messages
+        function displayMessage(message, type) {
+            const messageElement = document.createElement('div');
+            messageElement.className = type;
+            messageElement.textContent = message;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight; // Auto scroll to the bottom
+        }
+
+        // Function to generate bot responses
+        async function generateResponse(userMessage) {
+            let botResponse = '';
+
+            // Predefined responses
+            switch (userMessage.toLowerCase()) {
+                case 'what is your name?':
+                    botResponse = 'My name is Gracy! How can I help you?';
+                    break;
+                case 'who is your boyfriend?':
+                    botResponse = 'Noo, Anuj is my boyfriend and I love him!';
+                    break;
+                default:
+                    // Call the backend to get a response from OpenAI
+                    botResponse = await getChatGPTResponse(userMessage);
+                    break;
+            }
+
+            // Display bot response
+            setTimeout(() => {
+                displayMessage(botResponse, 'bot-msg');
+            }, 500); // Delay for realism
+        }
+
+        // Function to call the backend and get the response
+        async function getChatGPTResponse(userMessage) {
+            try {
+                const response = await fetch('http://localhost:3000/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: userMessage,
+                    }),
+                });
+
+                const data = await response.json();
+                return data.message;
+            } catch (error) {
+                console.error("Error:", error);
+                return "Sorry, there was an error connecting to the chatbot.";
+            }
+        }
+
+        // Event listener for the send button
+        sendButton.addEventListener('click', sendMessage);
+
+        // Allow pressing 'Enter' to send a message
+        input.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

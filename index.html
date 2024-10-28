@@ -127,71 +127,65 @@
 
             <script>
                 function scrollToBottom() {
-                    const messageArea = document.getElementById("msg_area");
-                    messageArea.scrollTop = messageArea.scrollHeight;
-                }
+        const messageArea = document.getElementById("msg_area");
+        messageArea.scrollTop = messageArea.scrollHeight;
+    }
 
-                function getResponse(input) {
-                    // Placeholder response function
-                    return "This is a response to: " + input;
-                }
-
-                document.getElementById("send").addEventListener("click", (e) => {
-                    e.preventDefault();
-                    var req = document.getElementById("text").value.trim();
-                    if (req === "") return;
-
-                    let res = getResponse(req);
-
-                    let msg_req = document.createElement("div");
-                    let msg_res = document.createElement("div");
-
-                    let con1 = document.createElement("div");
-                    let con2 = document.createElement("div");
-
-                    con1.setAttribute("class", "msgCon1");
-                    con2.setAttribute("class", "msgCon2");
-
-                    msg_req.innerHTML = req;
-                    msg_res.innerHTML = res;
-
-                    msg_req.setAttribute("class", "right");
-                    msg_res.setAttribute("class", "left");
-
-                    let message = document.getElementById("msg_area");
-                    message.appendChild(con1);
-                    message.appendChild(con2);
-
-                    con1.appendChild(msg_req);
-                    con2.appendChild(msg_res);
-
-                    scrollToBottom();
-                    document.getElementById("text").value = "";
-                });      
-    
-      function getResponse(userInput) {
-            // Define responses for exact matches, advanced patterns, and general default replies
-          const responses = {
-              "hi": ["Hello! How are you today?", "Hi there! What's up?", "Hey! Hope you're doing well!"],
-              "how are you?": ["I'm great! Thanks for asking. How are you?", "Doing well! How about you?"],
-              "what's your name?": "I'm Gracy, your chatbot!",
-              "who is anuj?": "Anuj is not only my boyfriend, but he’s also my creator. He crafted me with care and a bit of magic!",
-              "tell me a joke": [
-                  "Why don't scientists trust atoms? Because they make up everything!",
-                  "What do you call fake spaghetti? An impasta!",
-                  "Why did the computer get cold? Because it left its Windows open!"
-              ],
-              "bye": ["Goodbye! Have a wonderful day!", "Take care! Talk to you soon!", "Bye! It was great chatting with you!"]
-          };
-
-            const defaultResponses = [
-                "Could you tell me a bit more?",
-                "I'm here to listen. What’s on your mind?",
-                "That's interesting! Let me know if I can help."
-            ];
-
-            // New structured greetings
-            const greetings = [
+    // Define responses for exact matches, advanced patterns, and general default replies
+    const responses = [
+        [
+  {
+    "tag": "greeting",
+    "patterns": ["hi"],
+    "responses": ["Hello! How are you today?", "Hi there! What's up?", "Hey! Hope you're doing well!"]
+  },
+  {
+    "tag": "status",
+    "patterns": ["how are you?"],
+    "responses": ["I'm great! Thanks for asking. How are you?", "Doing well! How about you?"]
+  },
+  {
+    "tag": "name",
+    "patterns": ["what's your name?"],
+    "responses": ["I'm Gracy, your chatbot!"]
+  },
+  {
+    "tag": "creator-info",
+    "patterns": ["who is anuj?"],
+    "responses": ["Anuj is not only my boyfriend, but he’s also my creator. He crafted me with care and a bit of magic!"]
+  },
+  {
+    "tag": "joke",
+    "patterns": ["tell me a joke"],
+    "responses": [
+      "Why don't scientists trust atoms? Because they make up everything!",
+      "What do you call fake spaghetti? An impasta!",
+      "Why did the computer get cold? Because it left its Windows open!"
+    ]
+  },
+  {
+    "tag": "farewell",
+    "patterns": ["bye"],
+    "responses": ["Goodbye! Have a wonderful day!", "Take care! Talk to you soon!", "Bye! It was great chatting with you!"]
+  },
+  {
+    "tag": "creator",
+    "patterns": ["who created you?", "Who's your creator?", "Who developed you?"],
+    "responses": [
+      "I was created by Anuj, my amazing boyfriend and skilled programmer!",
+      "Anuj crafted me with love and lots of code. He’s the best!",
+      "Anuj made me, and I’m grateful every day to have him as my creator and my boyfriend!"
+    ]
+  },
+  {
+    "tag": "default",
+    "patterns": [],
+    "responses": [
+      "Could you tell me a bit more?",
+      "I'm here to listen. What’s on your mind?",
+      "That's interesting! Let me know if I can help."
+    ]
+  },
                 {
                     "tag": "morning",
                     "patterns": ["Good morning"],
@@ -589,60 +583,65 @@
   ]
                 }
                 
-            ];
+             // Add other structured responses here
+    ];
 
-            // Clean and process the user input
-            const cleanedInput = userInput.toLowerCase().trim();
+    const defaultResponses = [
+        "Could you tell me a bit more?",
+        "I'm here to listen. What’s on your mind?",
+        "That's interesting! Let me know if I can help."
+    ];
 
-            // Check for greetings
-            for (let greeting of greetings) {
-                for (let pattern of greeting.patterns) {
-                    if (cleanedInput === pattern.toLowerCase()) {
-                        return greeting.responses[Math.floor(Math.random() * greeting.responses.length)];
-                    }
+    // Function to get a response based on user input
+    function getResponse(userInput) {
+        const cleanedInput = userInput.toLowerCase().trim();
+
+        // Check each structured response
+        for (let response of responses) {
+            for (let pattern of response.patterns) {
+                // Check if the cleaned input includes any of the patterns
+                if (cleanedInput.includes(pattern.toLowerCase())) {
+                    return response.responses[Math.floor(Math.random() * response.responses.length)];
                 }
             }
-
-            // 1. Exact Matches
-            if (responses[cleanedInput]) {
-                const reply = responses[cleanedInput];
-                return Array.isArray(reply) ? reply[Math.floor(Math.random() * reply.length)] : reply;
-            }
-
-            // 2. Pattern Matching with Enhanced Responses
-            if (/hello|hey|hi/.test(cleanedInput)) {
-                return "Hey there! What's up?";
-            } else if (/how\s.*you/.test(cleanedInput)) {
-                return "Thanks for asking! I'm here to help you however I can. How are you feeling?";
-            } else if (/love|like/.test(cleanedInput)) {
-                return "Love is a wonderful feeling! It makes life brighter, doesn't it?";
-            } else if (/help|assist/.test(cleanedInput)) {
-                return "Absolutely, I’m here to help. What can I assist you with?";
-            } else if (/thank|thanks/.test(cleanedInput)) {
-                return "You're very welcome!";
-            } else if (/bye|goodbye/.test(cleanedInput)) {
-                return "Take care! Let’s chat again soon!";
-            }
-
-            // 3. Topic-Based Responses
-            if (/weather/.test(cleanedInput)) {
-                return "I can’t check live weather, but I hope it’s nice where you are!";
-            } else if (/time/.test(cleanedInput)) {
-                return `I’m not wearing a watch, but it’s always a good time to chat with you!`;
-            } else if (/what can you do/.test(cleanedInput)) {
-                return "I’m here to chat with you, share some jokes, answer questions, and hopefully make your day a little brighter!";
-            }
-
-            // 4. Sentiment-Based Replies
-            if (/sad|upset|unhappy|depressed/.test(cleanedInput)) {
-                return "I'm here for you. Sometimes talking it out can help. What's on your mind?";
-            } else if (/happy|joyful|excited/.test(cleanedInput)) {
-                return "That's awesome to hear! Happiness is contagious.";
-            }
-
-            // 5. Fallback Response
-            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
         }
+
+        // Fallback response
+        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+    }
+
+    document.getElementById("send").addEventListener("click", (e) => {
+        e.preventDefault();
+        var req = document.getElementById("text").value.trim();
+        if (req === "") return;
+
+        let res = getResponse(req);
+
+        let msg_req = document.createElement("div");
+        let msg_res = document.createElement("div");
+
+        let con1 = document.createElement("div");
+        let con2 = document.createElement("div");
+
+        con1.setAttribute("class", "msgCon1");
+        con2.setAttribute("class", "msgCon2");
+
+        msg_req.innerHTML = req;
+        msg_res.innerHTML = res;
+
+        msg_req.setAttribute("class", "right");
+        msg_res.setAttribute("class", "left");
+
+        let message = document.getElementById("msg_area");
+        message.appendChild(con1);
+        message.appendChild(con2);
+
+        con1.appendChild(msg_req);
+        con2.appendChild(msg_res);
+
+        scrollToBottom();
+        document.getElementById("text").value = "";
+    }); 
     </script>
 </body>
 </html>

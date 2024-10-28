@@ -65,12 +65,3 @@ module.exports = {
     multiply,
     divide,
 };
-
-const maths = require('./maths.js');
-
-const resultAdd = maths.add("five", "three"); // 8
-const resultSubtract = maths.subtract("nine", "four"); // 5
-const resultMultiply = maths.multiply("two", "six"); // 12
-const resultDivide = maths.divide("eight", "two"); // 4
-
-console.log(resultAdd, resultSubtract, resultMultiply, resultDivide);

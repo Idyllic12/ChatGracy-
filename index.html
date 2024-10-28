@@ -3,7 +3,6 @@
    <head>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>ChatGracy</title>
-            <script src="path/to/your/local/math.min.js"></script>
                 * {
                     margin: 0;
                     padding: 0;
@@ -643,28 +642,6 @@
         scrollToBottom();
         document.getElementById("text").value = "";
     });
-       function getResponse(req) {
-            // Check for a math expression
-            if (isMathExpression(req)) {
-                try {
-                    // Evaluate the expression using math.js
-                    let result = math.evaluate(req);
-                    return `Result: ${result}`;
-                } catch (error) {
-                    return `Error: ${error.message}`;
-                }
-            }
-
-            // Handle other chatbot responses here
-            return "I'm sorry, I can't help with that.";
-        }
-
-        // Function to determine if the input is a math expression
-        function isMathExpression(input) {
-            // Regex to check if input contains only numbers, operators, and certain functions
-            const mathRegex = /^[0-9+\-*/().\s^sin|cos|tan|log|exp|sqrt]+$/i;
-            return mathRegex.test(input);
-               };
     </script>
 </body>
 </html>

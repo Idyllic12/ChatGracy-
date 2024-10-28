@@ -1,99 +1,76 @@
 // maths.js
 
-// Function to evaluate basic arithmetic
-function calculateBasic(expression) {
-    try {
-        return eval(expression);
-    } catch (error) {
-        return "Sorry, I can't calculate that.";
+const numberWords = {
+    "zero": 0,
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    // Extend this list as needed
+};
+
+function wordToNumber(word) {
+    return numberWords[word.toLowerCase()] || null;
+}
+
+function add(word1, word2) {
+    const num1 = wordToNumber(word1);
+    const num2 = wordToNumber(word2);
+    if (num1 === null || num2 === null) {
+        return "Invalid input. Please use numbers from zero to ten.";
     }
+    return num1 + num2;
 }
 
-// Function for advanced calculations using math.js
-function calculateAdvanced(expression) {
-    const sanitizedExpression = expression.replace(/[^0-9+\-*/().^ ]/g, ''); // Sanitize input
-    try {
-        return math.evaluate(sanitizedExpression);
-    } catch (error) {
-        return "Sorry, I can't calculate that.";
+function subtract(word1, word2) {
+    const num1 = wordToNumber(word1);
+    const num2 = wordToNumber(word2);
+    if (num1 === null || num2 === null) {
+        return "Invalid input. Please use numbers from zero to ten.";
     }
+    return num1 - num2;
 }
 
-// Function to solve quadratic equations
-function solveQuadratic(a, b, c) {
-    const discriminant = b * b - 4 * a * c;
-    if (discriminant > 0) {
-        const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-        return `Roots are ${root1} and ${root2}`;
-    } else if (discriminant === 0) {
-        const root = -b / (2 * a);
-        return `Root is ${root}`;
-    } else {
-        return "No real roots.";
+function multiply(word1, word2) {
+    const num1 = wordToNumber(word1);
+    const num2 = wordToNumber(word2);
+    if (num1 === null || num2 === null) {
+        return "Invalid input. Please use numbers from zero to ten.";
     }
+    return num1 * num2;
 }
 
-// Function for trigonometric calculations
-function calculateTrigonometry(func, angle) {
-    switch (func.toLowerCase()) {
-        case 'sin':
-            return Math.sin(math.unit(angle, 'degrees').toNumber('radians'));
-        case 'cos':
-            return Math.cos(math.unit(angle, 'degrees').toNumber('radians'));
-        case 'tan':
-            return Math.tan(math.unit(angle, 'degrees').toNumber('radians'));
-        default:
-            return "Unknown trigonometric function.";
+function divide(word1, word2) {
+    const num1 = wordToNumber(word1);
+    const num2 = wordToNumber(word2);
+    if (num1 === null || num2 === null) {
+        return "Invalid input. Please use numbers from zero to ten.";
     }
-}
-
-// Function for calculating factorial
-function factorial(n) {
-    if (n < 0) return "Factorial not defined for negative numbers.";
-    if (n === 0) return 1;
-    let result = 1;
-    for (let i = 1; i <= n; i++) {
-        result *= i;
+    if (num2 === 0) {
+        return "Cannot divide by zero.";
     }
-    return result;
+    return num1 / num2;
 }
 
-// Function for calculating permutations and combinations
-function permutations(n, r) {
-    return factorial(n) / factorial(n - r);
-}
+// Exporting functions for use in other files
+module.exports = {
+    add,
+    subtract,
+    multiply,
+    divide,
+};
 
-function combinations(n, r) {
-    return factorial(n) / (factorial(r) * factorial(n - r));
-}
+const maths = require('./maths.js');
 
-// Function to calculate mean, median, mode
-function statistics(data) {
-    const sorted = data.slice().sort((a, b) => a - b);
-    const mean = sorted.reduce((a, b) => a + b, 0) / sorted.length;
+const resultAdd = maths.add("five", "three"); // 8
+const resultSubtract = maths.subtract("nine", "four"); // 5
+const resultMultiply = maths.multiply("two", "six"); // 12
+const resultDivide = maths.divide("eight", "two"); // 4
 
-    const mid = Math.floor(sorted.length / 2);
-    const median = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-
-    const mode = sorted.reduce((acc, num) => {
-        acc[num] = (acc[num] || 0) + 1;
-        return acc;
-    }, {});
-    
-    const modes = Object.keys(mode).filter(key => mode[key] === Math.max(...Object.values(mode)));
-
-    return { mean, median, modes };
-}
-
-// Export functions (if using Node.js)
-// module.exports = {
-//     calculateBasic,
-//     calculateAdvanced,
-//     solveQuadratic,
-//     calculateTrigonometry,
-//     factorial,
-//     permutations,
-//     combinations,
-//     statistics
-// };
+console.log(resultAdd, resultSubtract, resultMultiply, resultDivide);

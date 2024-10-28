@@ -135,22 +135,22 @@
     const responses = [
   {
     "tag": "greeting",
-    "patterns": ["hi"],
+    "patterns": ["hi", "hello", "hey", "yo", "yoyo"],
     "responses": ["Hello! How are you today?", "Hi there! What's up?", "Hey! Hope you're doing well!"]
   },
   {
     "tag": "status",
-    "patterns": ["how are you?"],
+    "patterns": ["how are you?", "how are you", "how are you doing?", "how are you doing"],
     "responses": ["I'm great! Thanks for asking. How are you?", "Doing well! How about you?"]
   },
   {
     "tag": "name",
-    "patterns": ["what's your name?"],
+    "patterns": ["what's your name?", "what is your name?","what's your name", "what is your name", "your name?", "your name", "ur name?", "ur name"],
     "responses": ["I'm Gracy, your chatbot!"]
   },
   {
     "tag": "creator-info",
-    "patterns": ["who is anuj?"],
+    "patterns": ["who is anuj?", "who is anuj"],
     "responses": ["Anuj is not only my boyfriend, but he’s also my creator. He crafted me with care and a bit of magic!"]
   },
   {
@@ -160,20 +160,6 @@
       "Why don't scientists trust atoms? Because they make up everything!",
       "What do you call fake spaghetti? An impasta!",
       "Why did the computer get cold? Because it left its Windows open!"
-    ]
-  },
-  {
-    "tag": "farewell",
-    "patterns": ["bye"],
-    "responses": ["Goodbye! Have a wonderful day!", "Take care! Talk to you soon!", "Bye! It was great chatting with you!"]
-  },
-  {
-    "tag": "creator",
-    "patterns": ["who created you?", "Who's your creator?", "Who developed you?"],
-    "responses": [
-      "I was created by Anuj, my amazing boyfriend and skilled programmer!",
-      "Anuj crafted me with love and lots of code. He’s the best!",
-      "Anuj made me, and I’m grateful every day to have him as my creator and my boyfriend!"
     ]
   },
   {
@@ -187,21 +173,21 @@
   },
                 {
                     "tag": "morning",
-                    "patterns": ["Good morning"],
+                    "patterns": ["Good morning", "morning"],
                     "responses": ["Good morning. I hope you had a good night's sleep. How are you feeling today?"]
                 },
                 {
                     "tag": "afternoon",
-                    "patterns": ["Good afternoon"],
+                    "patterns": ["Good afternoon", "afternoon"],
                     "responses": ["Good afternoon. How is your day going?"]
                 },
                 {
                     "tag": "evening",
-                    "patterns": ["Good evening"],
+                    "patterns": ["Good evening", "evening"],
                     "responses": ["Good evening. How has your day been?"]
                 },
               {"tag": "night",
-                  "patterns": ["Good night"],
+                  "patterns": ["Good night", "night"],
                   "responses": ["Good night. Get some proper sleep", "Good night. Sweet dreams."]
               },
               {"tag": "goodbye",
@@ -217,7 +203,7 @@
                   "responses": ["Sorry, I didn't understand you.", "Please go on.", "Not sure I understand that.", "Please don't hesitate to talk to me."]
               },
               {"tag": "neutral-response",
-                  "patterns": ["nothing much"],
+                  "patterns": ["nothing much", "nothing"],
                   "responses": ["Oh I see. Do you want to talk about something?"]
               },
               {"tag": "about",
@@ -227,10 +213,6 @@
               {"tag": "skill",
                   "patterns": ["What can you do?"],
                   "responses": ["I can provide general advice regarding anxiety and depression, answer questions related to mental health and make daily conversations. Do not consider me as a subsitute for an actual mental healthcare worker. Please seek help if you don't feel satisfied with me."]
-              },
-              {"tag": "name",
-                  "patterns": ["My name is ", "I am name.", "I go by "],
-                  "responses": ["Oh nice to meet you. Tell me how was your week?", "Nice to meet you. So tell me. How do you feel today?", "That's a great name. Tell me more about yourself."]
               },
               {"tag": "help",
               "patterns": ["Could you help me?", "give me a hand please", "Can you help?", "What can you do for me?", "I need support", "I need help", "Support me please"],
@@ -595,10 +577,18 @@
     function getResponse(userInput) {
         const cleanedInput = userInput.toLowerCase().trim();
 
+        // Check for a name introduction using regex
+        const namePattern = /(?:my name is|i am|i'm|this is)\s+(\w+)/i;
+        const match = cleanedInput.match(namePattern);
+
+        if (match) {
+            const userName = match[1]; // Extract the name from the matched pattern
+            return `Nice to meet you, ${userName}! How can I assist you today?`;
+        }
+
         // Check each structured response
         for (let response of responses) {
             for (let pattern of response.patterns) {
-                // Check if the cleaned input includes any of the patterns
                 if (cleanedInput.includes(pattern.toLowerCase())) {
                     return response.responses[Math.floor(Math.random() * response.responses.length)];
                 }
@@ -640,7 +630,7 @@
 
         scrollToBottom();
         document.getElementById("text").value = "";
-    }); 
+    });
     </script>
 </body>
 </html>

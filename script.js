@@ -10,11 +10,6 @@ function scrollToBottom() {
     "patterns": ["hi", "hello", "hey", "yo", "yoyo"],
     "responses": ["Hello! How are you today?", "Hi there! What's up?", "Hey! Hope you're doing well!"]
   },
-    {
-    "tag": "status",
-    "patterns": ["how are you?", "how are you", "how are you doing?", "how are you doing"],
-    "responses": ["I'm great! Thanks for asking. How are you?", "Doing well! How about you?"]
-  },
   {
     "tag": "name",
     "patterns": ["what's your name?", "what is your name?","what's your name", "what is your name", "your name?", "your name", "ur name?", "ur name"],

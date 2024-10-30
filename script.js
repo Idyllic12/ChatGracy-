@@ -10,11 +10,6 @@ function scrollToBottom() {
     "patterns": ["hi", "hello", "hey", "yo", "yoyo"],
     "responses": ["Hello! How are you today?", "Hi there! What's up?", "Hey! Hope you're doing well!"]
   },
-{
-    "tag": "status",
-    "patterns": ["how are you?", "how are you", "how are u?", "how r you?", "how r u", "how are ya", "how you doing?", "how’s it going?", "how have you been?", "how are things?", "how’s life?"],
-    "responses": ["I'm great! Thanks for asking. How are you?", "Doing well! How about you?", "I'm here and ready to chat! How are you feeling?"]
-},
   {
     "tag": "name",
     "patterns": ["what's your name?", "what is your name?","what's your name", "what is your name", "your name?", "your name", "ur name?", "ur name"],
@@ -56,6 +51,11 @@ function scrollToBottom() {
       "That's interesting! Let me know if I can help."
     ]
   },
+            {
+    "tag": "status",
+    "patterns": ["how are you?", "how are you", "how are u?", "how r you?", "how r u", "how are ya", "how you doing?", "how’s it going?", "how have you been?", "how are things?", "how’s life?"],
+    "responses": ["I'm great! Thanks for asking. How are you?", "Doing well! How about you?", "I'm here and ready to chat! How are you feeling?"]
+},
                 {
                     "tag": "morning",
                     "patterns": ["Good morning", "morning"],

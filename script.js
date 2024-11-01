@@ -452,27 +452,21 @@ function scrollToBottom() {
         "I'm here to listen. What’s on your mind?",
         "That's interesting! Let me know if I can help."
     ];
-    // Function to get a response based on user input
-    function getResponse(userInput) {
-        const cleanedInput = userInput.toLowerCase().trim();
 
-        // Check for a name introduction using regex
-        const namePattern = /(?:my name is|i am|i'm|this is)\s+(\w+)/i;
-        const match = cleanedInput.match(namePattern);
+     // Check each structured response
 
-        if (match) {
-            const userName = match[1]; // Extract the name from the matched pattern
-            return `Nice to meet you, ${userName}! How can I assist you today?`;
-        }
+for (let response of responses)
 
-        // Check each structured response
-        for (let response of responses) {
-            for (let pattern of response.patterns) {
-                if (cleanedInput.includes(pattern.toLowerCase())) {
-                    return response.responses[Math.floor(Math.random() * response.responses.length)];
-                }
-            }
-        }
+{
+
+for (let pattern of response .patterns) 
+{
+
+if (cleaned Input .includes (pattern .toLowerCase())) {
+        return response .responses [Math .floor(Math.random() * response.responses .length)];
+       } 
+    }
+}
 
         // Fallback response
         return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];

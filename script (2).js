@@ -452,18 +452,6 @@ function scrollToBottom() {
         "I'm here to listen. What’s on your mind?",
         "That's interesting! Let me know if I can help."
     ];
-    // Function to get a response based on user input
-    function getResponse(userInput) {
-        const cleanedInput = userInput.toLowerCase().trim();
-
-        // Check for a name introduction using regex
-        const namePattern = /(?:my name is|i am|i'm|this is)\s+(\w+)/i;
-        const match = cleanedInput.match(namePattern);
-
-        if (match) {
-            const userName = match[1]; // Extract the name from the matched pattern
-            return `Nice to meet you, ${userName}! How can I assist you today?`;
-        }
 
         // Check each structured response
         for (let response of responses) {

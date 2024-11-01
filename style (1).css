@@ -17,7 +17,7 @@ body {
     width: 100vw;
     max-width: 540px;
     height: 100vh;
-    display: flex;
+    display: f lex;
     flex-direction: column;
     box-shadow: inset 0 0 10px 4px #1116;
 }
